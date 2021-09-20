@@ -10,7 +10,14 @@ namespace Labyrinth
     {
         static void Main(string[] args)
         {
-
+            List<string> aafficher = new List<string>();
+            Maze test = new Maze(20, 30);
+            test.Generate();
+            aafficher = test.Display();
+            foreach (var item in aafficher)
+            {
+                Console.WriteLine(item);
+            }
 
             // Keep the console window open
             Console.WriteLine("----------------------");
