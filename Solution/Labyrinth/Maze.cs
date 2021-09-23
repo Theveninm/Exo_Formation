@@ -45,7 +45,7 @@ namespace Labyrinth
 
         public bool IsOpen(int i, int j, int w)
         {
-            return false;
+            return _maze[i, j].Walls[w];
         }
 
         public bool IsMazeStart(int i, int j)

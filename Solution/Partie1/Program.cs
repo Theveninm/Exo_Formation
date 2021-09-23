@@ -28,7 +28,7 @@ namespace Partie1
                 }
                 else
                 {
-                    Compte.AjouterCompte(lecteurligne[0].Trim(), Double.Parse(lecteurligne[1]));
+                    Compte.AjouterCompte(lecteurligne[0].Trim(), Double.Parse(lecteurligne[1].Replace('.',',')));
                 }
             }
             Compte.AfficherComptes();
@@ -37,7 +37,7 @@ namespace Partie1
             foreach (var item in lecteurfichier)
             {
                 lecteurligne = item.Split(';');
-                if (Compte.Virement(Double.Parse(lecteurligne[1]), lecteurligne[2].Trim(), lecteurligne[3].Trim()))
+                if (Compte.Virement(Double.Parse(lecteurligne[1].Replace('.', ',')), lecteurligne[2].Trim(), lecteurligne[3].Trim()))
                 {
                     sortiefichier.Add($"{i++};OK");
                 }
