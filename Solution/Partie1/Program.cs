@@ -24,11 +24,11 @@ namespace Partie1
                 lecteurligne = item.Split(';');
                 if (lecteurligne[1] == "")
                 {
-                    new Compte(lecteurligne[0].Trim());
+                    Compte.AjouterCompte(lecteurligne[0].Trim());
                 }
                 else
                 {
-                    new Compte(lecteurligne[0].Trim(), Double.Parse(lecteurligne[1]));
+                    Compte.AjouterCompte(lecteurligne[0].Trim(), Double.Parse(lecteurligne[1]));
                 }
             }
             Compte.AfficherComptes();

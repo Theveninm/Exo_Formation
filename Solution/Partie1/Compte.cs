@@ -15,12 +15,28 @@ namespace Partie1
         private Double _maxRetrait = 1000;
         private List<Transaction> _historiqueTransactions;
 
-        public Compte(string identifiant,Double solde = 0)
+        //on passe par la classe AjouterCompte pour créer les comptes
+        private Compte(string identifiant,Double solde = 0)
         {
             _numeroCompte = identifiant;
             _solde = solde;
             _repertoire.Add(identifiant, this);
             _historiqueTransactions = new List<Transaction>();
+        }
+        /// <summary>
+        /// ajoute un compte à la base de donée
+        /// </summary>
+        /// <param name="identifiant"></param>
+        /// <param name="solde"></param>
+        /// <returns></returns>
+        public static bool AjouterCompte(string identifiant, Double solde = 0)
+        {
+            if (_repertoire.ContainsKey(identifiant))
+            {
+                return false;
+            }
+            new Compte(identifiant, solde);
+            return true;
         }
 
         public bool Depot(Double montant)
