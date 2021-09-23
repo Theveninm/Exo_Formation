@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Partie1
+namespace Partie2
 {
     class Program
     {
@@ -17,7 +17,7 @@ namespace Partie1
             string sttsPath = path + @"\Statut_1.txt";
 
             string[] lecteurfichier = File.ReadAllLines(acctPath);
-            List<string> sortiefichier= new List<string>();
+            List<string> sortiefichier = new List<string>();
             string[] lecteurligne;
             foreach (var item in lecteurfichier)
             {
@@ -28,21 +28,22 @@ namespace Partie1
                 }
                 else
                 {
-                    Compte.AjouterCompte(lecteurligne[0].Trim(), Double.Parse(lecteurligne[1].Replace('.',',')));
+                    Compte.AjouterCompte(lecteurligne[0].Trim(), Double.Parse(lecteurligne[1].Replace('.', ',')));
                 }
             }
             Compte.AfficherComptes();
             lecteurfichier = File.ReadAllLines(trxnPath);
+            int i = 1;
             foreach (var item in lecteurfichier)
             {
                 lecteurligne = item.Split(';');
-                if (Compte.Virement(int.Parse(lecteurligne[0].Trim()), Double.Parse(lecteurligne[1].Replace('.', ',')), lecteurligne[2].Trim(), lecteurligne[3].Trim()))
+                if (Compte.Virement(Double.Parse(lecteurligne[1].Replace('.', ',')), lecteurligne[2].Trim(), lecteurligne[3].Trim()))
                 {
-                    sortiefichier.Add($"{lecteurligne[0].Trim()};OK");
+                    sortiefichier.Add($"{i++};OK");
                 }
                 else
                 {
-                    sortiefichier.Add($"{lecteurligne[0].Trim()};KO");
+                    sortiefichier.Add($"{i++};KO");
                 }
             }
             File.WriteAllLines(sttsPath, sortiefichier.ToArray());

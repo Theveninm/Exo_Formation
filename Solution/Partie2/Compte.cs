@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Partie1
+namespace Partie2
 {
     class Compte
     {
         //private static int nbreComptes;
         private readonly string _numeroCompte;
-        private static List<int> _usedtransid = new List<int>();
         private static Dictionary<string, Compte> _repertoire = new Dictionary<string, Compte>();
         private Double _solde;
         private Double _maxRetrait = 1000;
@@ -40,13 +39,8 @@ namespace Partie1
             return true;
         }
 
-        public bool Depot(int idtrans, Double montant)
+        public bool Depot(Double montant)
         {
-            if (_usedtransid.Contains(idtrans))
-            {
-                return false;
-            }
-            _usedtransid.Add(idtrans);
             if (montant > 0)
             {
                 _solde += montant;
@@ -55,15 +49,10 @@ namespace Partie1
             return false;
         }
 
-        public bool Retrait(int idtrans, Double montant)
+        public bool Retrait(Double montant)
         {
             if (montant > 0 && _solde >= montant)
             {
-                if (_usedtransid.Contains(idtrans))
-                {
-                    return false;
-                }
-                _usedtransid.Add(idtrans);
                 _solde -= montant;
                 return true;
             }
@@ -76,35 +65,30 @@ namespace Partie1
         /// <param name="numeroexpediteur"></param>
         /// <param name="numerodestinataire"></param>
         /// <returns></returns>
-        public static bool Virement(int idtrans,Double montant, string numeroexpediteur, string numerodestinataire)
+        public static bool Virement(Double montant, string numeroexpediteur, string numerodestinataire)
         {
             //lorsque un des numéros est à 0, celà signifie que la transaction as lieu avec la banque
             if (numeroexpediteur == "0" && _repertoire.ContainsKey(numerodestinataire))
             {
-                return _repertoire[numerodestinataire].Depot(idtrans, montant);
+                return _repertoire[numerodestinataire].Depot(montant);
             }
             else if (numerodestinataire == "0" && _repertoire.ContainsKey(numeroexpediteur))
             {
-                return _repertoire[numeroexpediteur].Retrait(idtrans, montant);
+                return _repertoire[numeroexpediteur].Retrait(montant);
             }
             //sinon elle est faite entre l'expéditeur et le destinataire designé
             else if (_repertoire.ContainsKey(numeroexpediteur))
             {
-                return _repertoire[numeroexpediteur].Virement(idtrans, montant, numerodestinataire);
+                return _repertoire[numeroexpediteur].Virement(montant, numerodestinataire);
             }
             return false;
         }
 
-        public bool Virement(int idtrans, Double montant, string numerodecompte)
+        public bool Virement(Double montant, string numerodecompte)
         {
-            if (_usedtransid.Contains(idtrans))
-            {
-                return false;
-            }
-            _usedtransid.Add(idtrans);
             if (montant > 0 && _solde >= montant && _repertoire.ContainsKey(numerodecompte) && montant <= _maxRetrait)
             {
-                //on s'assure d'abord qu'on ne dépasse pas le seuil de virements
+                //on s'assure d'abord qu'on ne dépasse pas le seuille de virements
                 Double sommevirements = montant;
                 int virementcompte = 1;
                 for (int i = _historiqueTransactions.Count -1; i >=0 && virementcompte < 10; i--)
@@ -122,17 +106,17 @@ namespace Partie1
                 //puis on manipule les comptes
                 _solde -= montant;
                 _repertoire[numerodecompte]._solde += montant;
-                Transaction transactionActuelle = new Transaction(idtrans,_numeroCompte, numerodecompte, montant);
-                _historiqueTransactions.Add(new Transaction(idtrans,_numeroCompte, numerodecompte, montant));
+                Transaction transactionActuelle = new Transaction(_numeroCompte, numerodecompte, montant);
+                _historiqueTransactions.Add(new Transaction(_numeroCompte, numerodecompte, montant));
                 _repertoire[numerodecompte]._historiqueTransactions.Add(transactionActuelle);
                 return true;
             }
             return false;
         }
 
-        public bool Prelevement(int idtrans, Double montant, string numerodecompte)
+        public bool Prelevement(Double montant, string numerodecompte)
         {
-            return _repertoire[numerodecompte].Virement(idtrans, montant, _numeroCompte);
+            return _repertoire[numerodecompte].Virement(montant, _numeroCompte);
         }
 
         /// <summary>
