@@ -31,7 +31,7 @@ namespace Partie1
         /// <returns></returns>
         public static bool AjouterCompte(string identifiant, Double solde = 0)
         {
-            if (_repertoire.ContainsKey(identifiant))
+            if (_repertoire.ContainsKey(identifiant) && solde > 0)
             {
                 return false;
             }
