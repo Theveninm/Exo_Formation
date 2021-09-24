@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F9D025FA-FB14-4485-8D07-3188C31C0BBC}</ProjectGuid>
+    <ProjectGuid>{37831B07-F203-46F8-ABCD-4959D1B69313}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Partie2</RootNamespace>
     <AssemblyName>Partie2</AssemblyName>
@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Proprietaire.cs" />
+    <Compile Include="GestionnaireComptes.cs" />
     <Compile Include="Compte.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

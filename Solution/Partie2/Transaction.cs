@@ -8,18 +8,19 @@ namespace Partie2
 {
     class Transaction
     {
-        private static int _nbreTransactions = 0;
-        public readonly int _numeroTransaction;
-        public readonly string _numeroExpediteur;
-        public readonly string _numeroDestinataire;
-        public readonly Double _montant;
+        public readonly int NumeroTransaction;
+        public readonly string NumeroExpediteur;
+        public readonly string NumeroDestinataire;
+        public readonly Double Montant;
+        public readonly DateTime DateTrans;
 
-        public Transaction(string numeroExpediteur, string numeroDestinataire, Double montant)
+        public Transaction(int numerotransaction, string numeroExpediteur, string numeroDestinataire, Double montant, DateTime dateTrans)
         {
-            _numeroTransaction = ++_nbreTransactions;
-            _numeroExpediteur = numeroExpediteur;
-            _numeroDestinataire = numeroDestinataire;
-            _montant = montant;
+            NumeroTransaction = numerotransaction;
+            NumeroExpediteur = numeroExpediteur;
+            NumeroDestinataire = numeroDestinataire;
+            Montant = montant;
+            DateTrans = dateTrans;
         }
     }
 }
